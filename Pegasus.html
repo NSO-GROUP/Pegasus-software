@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PEGASUS | Capability Overview</title>
+    <style>
+        :root {
+            --bg-dark: #020617;
+            --panel-bg: #0f172a;
+            --border-color: #1e293b;
+            --accent-blue: #38bdf8;
+            --danger: #ef4444;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--bg-dark);
+            color: #f1f5f9;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Error Overlay */
+        #error-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(2, 6, 23, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .error-box {
+            border: 1px solid var(--border-color);
+            padding: 50px;
+            background: var(--panel-bg);
+            border-radius: 12px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            max-width: 450px;
+        }
+
+        .tg-btn {
+            background: #24A1DE;
+            color: white;
+            text-decoration: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .tg-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(36, 161, 222, 0.4); }
+
+        /* Main UI */
+        .header {
+            background: var(--panel-bg);
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .main { display: flex; height: calc(100vh - 65px); }
+
+        .sidebar {
+            width: 240px;
+            background: #0a1120;
+            border-right: 1px solid var(--border-color);
+            padding-top: 10px;
+        }
+
+        .nav-item {
+            padding: 15px 25px;
+            color: var(--text-dim);
+            cursor: pointer;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #1e293b44;
+            transition: 0.2s;
+        }
+
+        .nav-item:hover { background: #1e293b; color: var(--accent-blue); }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.7);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: var(--accent-blue); transform: translateY(-5px); }
+
+        .card h3 {
+            margin: 0 0 15px 0;
+            color: var(--accent-blue);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .capability-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .capability-list li::before {
+            content: "▹";
+            color: var(--accent-blue);
+            margin-right: 8px;
+        }
+
+        .btn {
+            background: #1e293b;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 10px;
+            width: 100%;
+            border-radius: 4px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: var(--accent-blue); color: #000; }
+    </style>
+</head>
+<body>
+
+<div id="error-overlay">
+    <div class="error-box">
+        <h2 style="color: var(--danger); margin-bottom: 10px;">ENCRYPTED SESSION EXPIRED</h2>
+        <p style="font-size: 0.9rem; line-height: 1.5;">You are not connected to the Command & Control (C2) server. Handshake failed.</p>
+        <p style="font-size: 0.8rem; color: var(--text-dim);">Please contact your system administrator to re-authorize your operator credentials.</p>
+        <a href="https://t.me/Crouddindret" class="tg-btn">Contact on Telegram</a>
+    </div>
+</div>
+
+<div class="header">
+    <div style="font-weight: 800; letter-spacing: 3px;">PEGASUS <span style="font-weight: 200; color: var(--text-dim);">OPERATOR</span></div>
+    <div style="font-size: 0.7rem; color: var(--danger); border: 1px solid var(--danger); padding: 4px 10px; border-radius: 20px;">⚠ SESSION UNSTABLE</div>
+</div>
+
+<div class="main">
+    <div class="sidebar">
+        <div class="nav-item" onclick="showError()">Dashboard</div>
+        <div class="nav-item" onclick="showError()">Target Management</div>
+        <div class="nav-item" onclick="showError()">Network Exploits</div>
+        <div class="nav-item" onclick="showError()">Media Extraction</div>
+        <div class="nav-item" onclick="showError()">System Logs</div>
+    </div>
+
+    <div class="content">
+        <h2 style="margin-top: 0; margin-bottom: 30px; font-weight: 300;">Exploit Capabilities</h2>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Comms Decryption</h3>
+                <ul class="capability-list">
+                    <li>WhatsApp/Signal/Telegram bypass</li>
+                    <li>iMessage Zero-Click extraction</li>
+                    <li>Live SMS interception</li>
+                </ul>
+                <button class="btn" onclick="showError()">Initialize Decryption</button>
+            </div>
+
+            <div class="card">
+                <h3>Geospatial Intelligence</h3>
+                <ul class="capability-list">
+                    <li>Real-time GPS tracking</li>
+                    <li>Cell tower triangulation</li>
+                    <li>WiFi proximity history</li>
+                </ul>
+                <button class="btn" onclick="showError()">Enable Live Map</button>
+            </div>
+
+            <div class="card">
+                <h3>Remote Sensors</h3>
+                <ul class="capability-list">
+                    <li>Silent Microphone activation</li>
+                    <li>Hidden Camera snapshots</li>
+                    <li>Ambient environment recording</li>
+                </ul>
+                <button class="btn" onclick="showError()">Request Sensor Access</button>
+            </div>
+
+            <div class="card">
+                <h3>System Access</h3>
+                <ul class="capability-list">
+                    <li>Full Keychain extraction</li>
+                    <li>Contact list & Call logs</li>
+                    <li>Browser history & Cookies</li>
+                </ul>
+                <button class="btn" onclick="showError()">Pull Data Archive</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showError() {
+        document.getElementById('error-overlay').style.display = 'flex';
+    }
+
+    // Backup: ensure any stray buttons also trigger it
+    document.querySelectorAll('button').forEach(btn => {
+        btn.onclick = showError;
+    });
+</script>
+
+</body>
+</html>
